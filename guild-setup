@@ -1,0 +1,9 @@
+Application
+- vscode
+- slack
+
+Set up an SSH key
+- cmd: ssh-keygen 
+- cat ~/.ssh/id_rsa.pub
+- pbcopy < ~/.ssh/id_rsa.pub
+
