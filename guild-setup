@@ -1,8 +1,11 @@
-Application
+: Application
 - vscode
 - slack
 
-Set up an SSH key
+:Install vscode extensions
+bash my_vscode_extensions.sh
+
+: Set up an SSH key
 - cmd: ssh-keygen 
 - cat ~/.ssh/id_rsa.pub
 - pbcopy < ~/.ssh/id_rsa.pub
