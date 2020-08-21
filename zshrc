@@ -142,6 +142,10 @@ function gcof() {
   osascript -e "set the clipboard to \"git checkout feature/ANFD-${number}\"";
 }
 
+function gstan() {
+  gsta stash^{/"$1"}; #git stash apply stash^{/<regex>}
+}
+
 # Git log find by commit message
 function glf() { git log --all --grep="$1"; }
 
