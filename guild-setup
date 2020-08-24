@@ -2,6 +2,26 @@
 - vscode
 - slack
 
+:Terminal
+- Brew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+- Zsh
+brew install zsh
+
+- Oh-My-Zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+brew install zsh-syntax-highlighting
+brew install zsh-autosuggestions
+brew install zsh-completions
+// add code to .zshrc (# plugin)
+
+Direnv
+- brew install direnv
+
+- Node.js
+https://nodejs.org/en/download/
+
 :Install vscode extensions
 bash my_vscode_extensions.sh
 
@@ -10,3 +30,13 @@ bash my_vscode_extensions.sh
 - cat ~/.ssh/id_rsa.pub
 - pbcopy < ~/.ssh/id_rsa.pub
 
+: Set up mac
+- change where Mac screenshots are saved
+Command + Shift + 5 > options
+
+- accessibiliy
+Zoom | Use scroll gesture with modifier keys to zoom: ^control
+Display | check > reduce motion, check > reduce transparency
+
+- Dock
+Scale effect
