@@ -1,9 +1,0 @@
-code --install-extension canadaduane.notes
-code --install-extension CoenraadS.bracket-pair-colorizer-2
-code --install-extension dbaeumer.vscode-eslint
-code --install-extension dsznajder.es7-react-js-snippets
-code --install-extension Equinusocio.vsc-community-material-theme
-code --install-extension Equinusocio.vsc-material-theme
-code --install-extension Tyriar.sort-lines
-code --install-extension vscode-icons-team.vscode-icons
-code --install-extension wayou.vscode-todo-highlight
