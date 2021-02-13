@@ -1,99 +1,119 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# ----------------------
-# Zsh setting
-# ----------------------
-export ZSH="/Users/atichatlappanopakon/.oh-my-zsh"
-ZSH_THEME="spaceship"
-DISABLE_AUTO_UPDATE="true"
-COMPLETION_WAITING_DOTS="true"
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+ZSH_DISABLE_COMPFIX=true
 
 plugins=(
   git
-  docker
   node
-  zsh-syntax-highlighting
-  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
-#OPTIONS SPACESHIP
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_HOST_SHOW=true
-SPACESHIP_USER_SHOW=true
-SPACESHIP_PACKAGE_SHOW=false
-SPACESHIP_KUBECONTEXT_SHOW=false
+export JAVA_HOME=`/usr/libexec/java_home`
+# export AIRFLOW_HOME=~/airflow
+# export SPARK_HOME="/Users/atichat/Desktop/spark"
 
-SPACESHIP_TIME_FORMAT=%T
-
-SPACESHIP_USER_PREFIX=''
-SPACESHIP_DOCKER_PREFIX=''
-SPACESHIP_NODE_PREFIX=''
-SPACESHIP_DIR_PREFIX=''
-
-#COPY FROM BASH_PROFILE
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/atichatlappanopakon/.sdkman"
-[[ -s "/Users/atichatlappanopakon/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/atichatlappanopakon/.sdkman/bin/sdkman-init.sh"
-
-#ENABLE direnv in zsh
+export PATH="$HOME/.jenv/bin:$PATH"
+export PATH="$PATH:$HOME/.npm-global/bin"
 eval "$(direnv hook $SHELL)"
+eval "$(jenv init -)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
+# ------------------------------------------------------------------
+# Custom Aliases
+# ------------------------------------------------------------------
+alias ls='ls -alh'
+alias lsd='ls -d */'
+alias D='cd ~/Desktop/'
+alias code_zsh='code ~/.zshrc'
+alias source_zsh='source ~/.zshrc'
+alias activate='source venv/bin/activate'
 
-# npm outdated
+alias venv_create='python3 -m venv venv'
 
-# ----------------------
-# Atichat Alias
-# ----------------------
-alias catEnv='cat .envrc'
-alias catZsh='cat ~/.zshrc'
+# genie ----------------------------------------------------------------------
+alias cd_work_genie='cd ~/Desktop/work-genie'
+alias work_genie_fe='cd ~/Desktop/work-genie/genie-frontend; code .'
+alias work_genie_be='cd ~/Desktop/work-genie/tap-genie-backend; idea .'
+alias work_genie_eval='cd ~/Desktop/work-genie/tadp-genie-evaluator-service; idea .'
+alias work_genie_back='cd ~/Desktop/work-genie/tadp-genie-background-processing; idea .'
 
-alias cdAtichat43='cd ~/Desktop/Atichat43'
-alias cdApplications='cd ~/Applications'
-alias cdFront='cd ~/Desktop/geopulse-frontend; nvm use; ls;'
-alias cdDesktop='cd ~/Desktop'
-alias cdDownloads='cd ~/Downloads'
+# geopulse ----------------------------------------------------------------------
+alias cd_work_geopulse='cd ~/Desktop/work-geopulse'
+alias work_geopulse_fe='cd ~/Desktop/work-geopulse/geopulse-frontend; direnv allow; code .'
 
-alias codeFront='code --add ~/Desktop/geopulse-frontend'
-alias codeEx='code --add ~/Desktop/experiment-geopulse-frontend'
-alias codeNote='code ~/Desktop/Atichat43/.todoNote.notes'
-alias codeZsh='code ~/.zshrc'
+# de ----------------------------------------------------------------------
+alias cd_work_de='cd ~/Desktop/work-de'
+alias work_de_airflow='cd ~/Desktop/work-de/de-airflow-tap-dags; code .'
+alias work_de_dataflow='cd ~/Desktop/work-de/tap-dataflow-geopulse; idea .'
 
-alias lst='ls -altF'
+alias github='cd ~/Desktop/personal-github; ls'
 
-alias openAtichat43='open ~/Desktop/Atichat43'
-alias openApplications='open ~/Applications'
-alias openBack='open ~/Desktop/product-service-analytics'
-alias openFront='open ~/Desktop/geopulse-frontend'
-alias openDesktop='open ~/Desktop'
-alias openDownloads='open ~/Downloads'
-
-alias lockd="osascript -e 'tell application \"System Events\" to key code 12 using {control down, command down}'"
-alias sleepd='pmset sleepnow'
-alias cleand="killall 'Airmail 3' 'Bear' 'Calendar' 'Day One' 'LINE' 'Notes' 'Trello';"
-alias readyWork="cleand ;open -a 'Google Chrome'; open -a 'Slack';"
-alias morning="open -a 'Airmail 3'; open -a 'Calendar'; open -a 'Day One';"
+# ------------------------------------------------------------------
+# NPM Aliases
+# ------------------------------------------------------------------
+alias npm_run_test_coverage='npm run test:coverage'
+alias npm_run_test_watch='npm run test:watch'
+alias npm_ls_global='npm list -g --depth=0'
 
 function jc() {
   local filename;
   filename="$*";
   osascript -e "jest --watch --verbose --coverage ${filename}";
 }
+# ------------------------------------------------------------------
+# Git Functions
+# ------------------------------------------------------------------
+function gcof() {
+  local number;
+  number="$*";
+  osascript -e "set the clipboard to \"git checkout feature/ANFD-${number}\"";
+}
 
-# ----------------------
+function gst() {
+  gsta stash^{/"$1"}; #git stash apply stash^{/<regex>}
+}
+
+# Git log find by commit message
+function glf() { git log --all --grep="$1"; }
+
+# ------------------------------------------------------------------
+# zsh
+# ------------------------------------------------------------------
+function git_current_user_email() {
+  command git config user.email 2>/dev/null
+}
+
+# Plugin
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}$(git_current_user_email):(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# ------------------------------------------------------------------
 # Git Aliases
-# ----------------------
+# ------------------------------------------------------------------
 alias gbd='git branch -D'
 alias gcob='git checkout -b'
 alias gda='git diff HEAD'
@@ -133,26 +153,9 @@ alias guser='git config user.name; git config user.email;'
 alias grpd='git remote prune origin --dry-run'
 alias grp='git remote prune origin; git branch -a;'
 
-# ----------------------
-# Git Functions
-# ----------------------
-function gcof() {
-  local number;
-  number="$*";
-  osascript -e "set the clipboard to \"git checkout feature/ANFD-${number}\"";
-}
-
-function gstan() {
-  gsta stash^{/"$1"}; #git stash apply stash^{/<regex>}
-}
-
-# Git log find by commit message
-function glf() { git log --all --grep="$1"; }
-
-# ------------------------------------
-# Docker alias and function
-# ------------------------------------
-
+# ------------------------------------------------------------------
+# Docker Aliases and function
+# ------------------------------------------------------------------
 # Get latest container ID
 alias dl="docker ps -l -q"
 
