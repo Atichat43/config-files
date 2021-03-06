@@ -40,3 +40,11 @@ Display | check > reduce motion, check > reduce transparency
 
 - Dock
 Scale effect
+
+
+- modify keys
+// capslock to left-crtl
+hidutil property --set '{"UserKeyMapping":
+  [{"HIDKeyboardModifierMappingSrc":0x700000039,
+    "HIDKeyboardModifierMappingDst":0x7000000e0}]
+}'
